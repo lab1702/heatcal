@@ -31,14 +31,14 @@ width <- 10
 height <- width * heatcal_aspect(2)
 
 # Use with png()
-\dontrun{
+if (interactive()) {
 png("calendar.png", width = 1000, height = 1000 * heatcal_aspect(3))
 heatcal(dates, values)
 dev.off()
 }
 
 # Use with pdf()
-\dontrun{
+if (interactive()) {
 pdf("calendar.pdf", width = 10, height = 10 * heatcal_aspect(1))
 heatcal(dates, values)
 dev.off()
