@@ -399,16 +399,16 @@ heatcal <- function(dates,
 #'
 #' # Use with png()
 #' if (interactive()) {
-#' png("calendar.png", width = 1000, height = 1000 * heatcal_aspect(3))
-#' heatcal(dates, values)
-#' dev.off()
+#'   png("calendar.png", width = 1000, height = 1000 * heatcal_aspect(3))
+#'   heatcal(dates, values)
+#'   dev.off()
 #' }
 #'
 #' # Use with pdf()
 #' if (interactive()) {
-#' pdf("calendar.pdf", width = 10, height = 10 * heatcal_aspect(1))
-#' heatcal(dates, values)
-#' dev.off()
+#'   pdf("calendar.pdf", width = 10, height = 10 * heatcal_aspect(1))
+#'   heatcal(dates, values)
+#'   dev.off()
 #' }
 #'
 #' @seealso [heatcal()] for creating the calendar heatmap
@@ -416,7 +416,7 @@ heatcal <- function(dates,
 #' @export
 heatcal_aspect <- function(nyears) {
   if (!is.numeric(nyears) || length(nyears) != 1 || is.na(nyears) ||
-      nyears < 1 || nyears != floor(nyears)) {
+    nyears < 1 || nyears != floor(nyears)) {
     stop("nyears must be a positive integer")
   }
   nyears <- as.integer(nyears)

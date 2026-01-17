@@ -148,7 +148,7 @@ test_that("get_value_color clamps out-of-range values", {
   val.range <- c(0, 10)
 
   # Values below range should clamp to first color
- expect_equal(heatcal:::get_value_color(-5, val.range, col.vec), "red")
+  expect_equal(heatcal:::get_value_color(-5, val.range, col.vec), "red")
 
   # Values above range should clamp to last color
   expect_equal(heatcal:::get_value_color(15, val.range, col.vec), "green")
@@ -315,7 +315,7 @@ test_that("heatcal renders full calendar without error", {
   result <- heatcal(dates, values)
 
   expect_s3_class(result, "data.frame")
-  expect_equal(nrow(result), 366)  # 2024 is a leap year
+  expect_equal(nrow(result), 366) # 2024 is a leap year
 })
 
 test_that("heatcal handles multi-year data", {
@@ -345,7 +345,7 @@ test_that("heatcal handles identical values", {
   on.exit(dev.off(), add = TRUE)
 
   dates <- as.Date("2024-01-01") + 0:30
-  values <- rep(5, 31)  # All identical values
+  values <- rep(5, 31) # All identical values
 
   # Should not error - expands range by +/- 0.5
   expect_silent(result <- heatcal(dates, values))
