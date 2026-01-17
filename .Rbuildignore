@@ -1,0 +1,12 @@
+^LICENSE\.md$
+^\.git$
+^\.gitignore$
+^\.Rcheck$
+^\.\.Rcheck$
+^\.claude$
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^cran-comments\.md$
+^\.github$
+^CRAN-SUBMISSION$
