@@ -1,0 +1,27 @@
+Package: heatcal
+Type: Package
+Title: Calendar Heatmap Visualizations
+Version: 0.1.0
+Authors@R: c(
+    person("Lars", "Bernhardsson", role = c("aut", "cre"),
+           email = "cran.sherry228@passinbox.com"))
+Description: Create calendar heatmap visualizations for time-series data.
+    Each day is displayed as a colored cell, with colors representing values.
+    Supports multiple color schemes, Monday or Sunday week starts, and
+    automatically handles multi-year data.
+License: GPL-2
+URL: https://github.com/lab1702/heatcal
+BugReports: https://github.com/lab1702/heatcal/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends:
+    R (>= 3.5.0)
+Imports:
+    grDevices,
+    graphics
+Suggests:
+    testthat (>= 3.0.0),
+    roxygen2,
+    devtools
+Config/testthat/edition: 3
