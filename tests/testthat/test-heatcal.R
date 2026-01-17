@@ -501,3 +501,86 @@ test_that("heatcal handles month ending on last day of week", {
   result <- heatcal(dates, values, week.start = "Monday")
   expect_s3_class(result, "data.frame")
 })
+
+# --- Tests for heatcal_aspect function ---
+
+test_that("heatcal_aspect validates input arguments", {
+  # Non-positive integers
+
+  expect_error(heatcal_aspect(0), "nyears must be a positive integer")
+  expect_error(heatcal_aspect(-1), "nyears must be a positive integer")
+  expect_error(heatcal_aspect(-5), "nyears must be a positive integer")
+
+  # Non-integer values
+  expect_error(heatcal_aspect(1.5), "nyears must be a positive integer")
+  expect_error(heatcal_aspect(2.7), "nyears must be a positive integer")
+
+  # NA values
+  expect_error(heatcal_aspect(NA), "nyears must be a positive integer")
+  expect_error(heatcal_aspect(NA_integer_), "nyears must be a positive integer")
+  expect_error(heatcal_aspect(NA_real_), "nyears must be a positive integer")
+
+  # Non-numeric types
+  expect_error(heatcal_aspect("1"), "nyears must be a positive integer")
+  expect_error(heatcal_aspect("a"), "nyears must be a positive integer")
+  expect_error(heatcal_aspect(TRUE), "nyears must be a positive integer")
+  expect_error(heatcal_aspect(NULL), "nyears must be a positive integer")
+
+  # Multiple values
+
+  expect_error(heatcal_aspect(c(1, 2)), "nyears must be a positive integer")
+  expect_error(heatcal_aspect(1:3), "nyears must be a positive integer")
+})
+
+test_that("heatcal_aspect returns correct numeric value", {
+  result <- heatcal_aspect(1)
+  expect_true(is.numeric(result))
+  expect_length(result, 1)
+  expect_true(result > 0)
+})
+
+test_that("heatcal_aspect calculates correct aspect ratios", {
+  # Formula: 7 * (nyears + 0.8) / 53
+
+  # 1 year: 7 * 1.8 / 53 = 12.6 / 53
+  expect_equal(heatcal_aspect(1), 7 * 1.8 / 53)
+
+  # 2 years: 7 * 2.8 / 53 = 19.6 / 53
+  expect_equal(heatcal_aspect(2), 7 * 2.8 / 53)
+
+  # 3 years: 7 * 3.8 / 53 = 26.6 / 53
+  expect_equal(heatcal_aspect(3), 7 * 3.8 / 53)
+
+  # 5 years: 7 * 5.8 / 53 = 40.6 / 53
+  expect_equal(heatcal_aspect(5), 7 * 5.8 / 53)
+
+  # 10 years: 7 * 10.8 / 53 = 75.6 / 53
+  expect_equal(heatcal_aspect(10), 7 * 10.8 / 53)
+})
+
+test_that("heatcal_aspect increases with more years", {
+  # Aspect ratio should increase as number of years increases
+  expect_lt(heatcal_aspect(1), heatcal_aspect(2))
+  expect_lt(heatcal_aspect(2), heatcal_aspect(3))
+  expect_lt(heatcal_aspect(3), heatcal_aspect(5))
+  expect_lt(heatcal_aspect(5), heatcal_aspect(10))
+})
+
+test_that("heatcal_aspect handles integer-like numeric values", {
+  # Should accept numeric values that are whole numbers
+  expect_equal(heatcal_aspect(1.0), heatcal_aspect(1))
+  expect_equal(heatcal_aspect(3.0), heatcal_aspect(3))
+})
+
+test_that("heatcal_aspect produces reasonable aspect ratios", {
+  # 1 year should be quite wide (aspect < 0.5)
+  expect_lt(heatcal_aspect(1), 0.5)
+
+  # Many years should be taller (aspect can exceed 1)
+  expect_gt(heatcal_aspect(10), 1)
+
+  # All ratios should be positive
+  for (n in 1:20) {
+    expect_gt(heatcal_aspect(n), 0)
+  }
+})

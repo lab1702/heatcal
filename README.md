@@ -60,6 +60,33 @@ vals <- c(10, 20, 15)
 heatcal(date_strings, vals, date.form = "%m/%d/%Y")
 ```
 
+## Square Days with `heatcal_aspect()`
+
+By default, calendar cells may appear stretched or squished depending on your graphics device dimensions. Use `heatcal_aspect()` to calculate the ideal height/width ratio for square day cells:
+
+```r
+# Calculate aspect ratio for a 2-year calendar
+heatcal_aspect(2)
+#> [1] 0.3698113
+
+# Use with png() - 1000px wide
+png("calendar.png", width = 1000, height = 1000 * heatcal_aspect(2))
+heatcal(dates, values)
+dev.off()
+
+# Use with pdf() - 10 inches wide
+pdf("calendar.pdf", width = 10, height = 10 * heatcal_aspect(3))
+heatcal(dates, values)
+dev.off()
+```
+
+| Years | Aspect Ratio | Example (10" wide) |
+|-------|--------------|-------------------|
+| 1     | 0.24         | 10" x 2.4"        |
+| 2     | 0.37         | 10" x 3.7"        |
+| 3     | 0.50         | 10" x 5.0"        |
+| 5     | 0.77         | 10" x 7.7"        |
+
 ## Authors
 
 - Paul Bleicher (original lattice version)

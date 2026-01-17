@@ -38,6 +38,7 @@ LEGEND_HEIGHT_RATIO <- 0.8
 
 # Grid structure constants
 DAYS_PER_WEEK <- 7
+WEEKS_PER_YEAR <- 53
 FIRST_DAY_IDX <- 0
 LAST_DAY_IDX <- 6
 MONTHS_PER_YEAR <- 12
@@ -371,4 +372,57 @@ heatcal <- function(dates,
   )
 
   invisible(caldat)
+}
+
+#' Calculate Aspect Ratio for Square Calendar Days
+#'
+#' Computes the height-to-width ratio that will render calendar heatmap cells
+#' as squares rather than stretched or squished rectangles. Use this value
+#' when setting up your graphics device dimensions.
+#'
+#' @param nyears Integer. The number of years to be displayed in the calendar.
+#'   Must be a positive integer.
+#'
+#' @return A numeric value representing the height/width ratio. Multiply your
+#'   desired width by this ratio to get the corresponding height for square days.
+#'
+#' @details
+#' The calendar heatmap displays 7 rows (days of the week) and approximately
+#' 53 columns (weeks of the year) per year, plus a color legend at the bottom.
+#' This function calculates the exact ratio needed so that each day cell
+#' appears as a square.
+#'
+#' @examples
+#' # For a 2-year calendar at 10 inches wide:
+#' width <- 10
+#' height <- width * heatcal_aspect(2)
+#'
+#' # Use with png()
+#' \dontrun{
+#' png("calendar.png", width = 1000, height = 1000 * heatcal_aspect(3))
+#' heatcal(dates, values)
+#' dev.off()
+#' }
+#'
+#' # Use with pdf()
+#' \dontrun{
+#' pdf("calendar.pdf", width = 10, height = 10 * heatcal_aspect(1))
+#' heatcal(dates, values)
+#' dev.off()
+#' }
+#'
+#' @seealso [heatcal()] for creating the calendar heatmap
+#'
+#' @export
+heatcal_aspect <- function(nyears) {
+  if (!is.numeric(nyears) || length(nyears) != 1 || is.na(nyears) ||
+      nyears < 1 || nyears != floor(nyears)) {
+    stop("nyears must be a positive integer")
+  }
+  nyears <- as.integer(nyears)
+
+  # Height per year panel: DAYS_PER_WEEK (7 units)
+  # Width: WEEKS_PER_YEAR (53 units)
+  # Total layout height: nyears panels + legend (LEGEND_HEIGHT_RATIO)
+  DAYS_PER_WEEK * (nyears + LEGEND_HEIGHT_RATIO) / WEEKS_PER_YEAR
 }
