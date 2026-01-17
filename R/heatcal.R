@@ -158,6 +158,10 @@ draw_year_boundary <- function(yr.dat) {
 #' Graphics parameters are saved and restored on exit, so the function should
 #' not affect subsequent plots.
 #'
+#' Note that plotting may fail with an error if the graphics device is too small
+#' to fit all years. Use [heatcal_aspect()] to calculate appropriate device
+#' dimensions that ensure each day cell is square and all years fit properly.
+#'
 #' @examples
 #' # Basic usage with random data
 #' set.seed(42)
@@ -177,7 +181,8 @@ draw_year_boundary <- function(yr.dat) {
 #' vals <- c(10, 20, 15)
 #' heatcal(date_strings, vals, date.form = "%m/%d/%Y")
 #'
-#' @seealso [strptime()] for date format codes,
+#' @seealso [heatcal_aspect()] for calculating device dimensions with square day cells,
+#'   [strptime()] for date format codes,
 #'   [grDevices::colorRampPalette()] for the color interpolation used internally
 #'
 #' @author Paul Bleicher (original), Lars Bernhardsson (base R port)

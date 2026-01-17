@@ -71,6 +71,10 @@ expanded by +/-0.5 to ensure proper color mapping.
 
 Graphics parameters are saved and restored on exit, so the function should
 not affect subsequent plots.
+
+Note that plotting may fail with an error if the graphics device is too small
+to fit all years. Use \code{\link[=heatcal_aspect]{heatcal_aspect()}} to calculate appropriate device
+dimensions that ensure each day cell is square and all years fit properly.
 }
 \examples{
 # Basic usage with random data
@@ -93,6 +97,7 @@ heatcal(date_strings, vals, date.form = "\%m/\%d/\%Y")
 
 }
 \seealso{
+\code{\link[=heatcal_aspect]{heatcal_aspect()}} for calculating device dimensions with square day cells,
 \code{\link[=strptime]{strptime()}} for date format codes,
 \code{\link[grDevices:colorRamp]{grDevices::colorRampPalette()}} for the color interpolation used internally
 }
